@@ -1,86 +1,73 @@
 import React, { useState } from "react";
 import API from "../API";
 
-const tableColumns = [
-  "№",
-  "Имя",
-  "Качества",
-  "Профессия",
-  "Встретился, раз",
-  "Оценка",
-];
-
-const Users = () => {
+const Usrs = () => {
   const [users, setUsers] = useState(API.users.fetchAll());
-
-  const handleDelete = (userId) => {
-    setUsers(
-      users.filter((user) => {
-        return user._id !== userId.target.closest("tr").id;
-      })
-    );
-  };
+  const handleDelete = (userId) =>
+    setUsers(users.filter((user) => user._id !== userId));
 
   const renderPhrase = (number) => {
-    if (1 < number && number < 5) {
-      return `${number} человека тусанет с тобой`;
-    } else {
-      return `${number} человек тусанет с тобой`;
-    }
+    const lastOne = Number(number.toString().slice(-1));
+    if (number > 4 && number < 15) return "Человек тусанет";
+    if ([2, 3, 4].indexOf(lastOne) >= 0) return "Человека тусанут";
+    if (lastOne === 1) return "Человек тусанет";
+    return "Человек тусанет";
   };
-
-  const getBageclasses = () => {
-    let classes = "badge m-2 bg-";
-    classes += users.length === 0 ? "danger" : "primary";
-    return classes;
-  };
-
   return (
     <>
       <h2>
-        <span className={getBageclasses()}>{renderPhrase(users.length)}</span>
+        <span
+          className={"badge bg-" + (users.length > 0 ? "primary" : "danger")}
+        >
+          {users.length > 0
+            ? `${users.length} ${renderPhrase(users.length)} с тобой сегодня`
+            : "Никто с тобой не тусанет"}
+        </span>
       </h2>
-      <table className="table">
-        <thead>
-          <tr>
-            {tableColumns.map((column) => (
-              <th key={tableColumns.indexOf(column)} scope="col">
-                {column}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr id={user._id} key={user._id}>
-              <th scope="row" key={user.name}>
-                {users.indexOf(user) + 1}
-              </th>
-              <td>{user.name}</td>
-              <td>
-                {user.qualities.map((quality) => (
-                  <div
-                    className={"badge m-1 bg-" + quality.color}
-                    key={quality._id}
-                  >
-                    {quality.name}
-                  </div>
-                ))}
-              </td>
-              <td>{user.profession.name}</td>
-              <td>{user.completedMeetings}</td>
-              <td>{user.rate + " /5"}</td>
-              <td>
-                <button onClick={handleDelete} className="btn btn-danger">
-                  delete
-                </button>
-              </td>
+      {users.length > 0 && (
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Имя</th>
+              <th scope="col">Качества</th>
+              <th scope="col">Профессия</th>
+              <th scope="col">Встретился, раз</th>
+              <th scope="col">Оценка</th>
+              <th />
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td>{user.name}</td>
+                <td>
+                  {user.qualities.map((item) => (
+                    <span
+                      className={"badge m-1 bg-" + item.color}
+                      key={item._id}
+                    >
+                      {item.name}
+                    </span>
+                  ))}
+                </td>
+                <td>{user.profession.name}</td>
+                <td>{user.completedMeetings}</td>
+                <td>{user.rate}</td>
+                <td>
+                  <button
+                    className={"btn btn-danger"}
+                    onClick={() => handleDelete(user._id)}
+                  >
+                    Удалить
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   );
 };
 
-export default Users;
+export default Usrs;
