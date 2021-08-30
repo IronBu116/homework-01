@@ -3,12 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
-import Users from "./components/users";
+import App from "./app";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Users />
-  </React.StrictMode>,
+  <>
+    <App />
+  </>,
   document.getElementById("root")
 );
 
