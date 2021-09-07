@@ -1,14 +1,17 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { iconFavoritesTrue, iconFavoritesFalse } from "../utils/bookMarkIcons";
 
-const BookMark = ({ favorites, onToggleMark, id }) => {
-  const getFavorites = () =>
-    favorites ? iconFavoritesTrue : iconFavoritesFalse;
-  return (
-    <span role="button" onClick={() => onToggleMark(id)}>
-      {getFavorites()}
-    </span>
-  );
+const BookMark = ({ status, ...rest }) => {
+    return (
+        <button {...rest}>
+            {status ? iconFavoritesTrue : iconFavoritesFalse}
+        </button>
+    );
+};
+
+BookMark.propTypes = {
+    status: PropTypes.bool
 };
 
 export default BookMark;
