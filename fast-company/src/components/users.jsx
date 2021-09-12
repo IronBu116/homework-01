@@ -5,6 +5,7 @@ import { paginate } from "../utils/paginate";
 import PropTypes from "prop-types";
 import GroupList from "./groupList";
 import API from "../API";
+import _ from "lodash";
 import SearchStatus from "./searchStatus";
 
 const Users = ({ users: allUsers, onHandleDelete, onToggleMark }) => {
@@ -12,7 +13,7 @@ const Users = ({ users: allUsers, onHandleDelete, onToggleMark }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
-
+    /* console.log(allUsers); */
     useEffect(() => {
         API.professions.fetchAll().then((data) => setProfessions(data));
     }, []);
@@ -30,7 +31,7 @@ const Users = ({ users: allUsers, onHandleDelete, onToggleMark }) => {
     };
 
     const filteredUsers = selectedProf
-        ? allUsers.filter((user) => user.profession === selectedProf)
+        ? allUsers.filter((user) => _.isEqual(user.profession, selectedProf))
         : allUsers;
     const count = filteredUsers.length;
     const users = paginate(filteredUsers, currentPage, pageSize);
