@@ -9,11 +9,11 @@ import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 
 const Users = ({ users: allUsers, onHandleDelete, onToggleMark }) => {
-    const pageSize = 2;
+    const pageSize = 8;
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    /* console.log(allUsers); */
+    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     useEffect(() => {
         API.professions.fetchAll().then((data) => setProfessions(data));
     }, []);
@@ -30,11 +30,16 @@ const Users = ({ users: allUsers, onHandleDelete, onToggleMark }) => {
         setCurrentPage(pageIndex);
     };
 
+    const handleSort = (item) => {
+        setSortBy(item);
+    };
+
     const filteredUsers = selectedProf
         ? allUsers.filter((user) => _.isEqual(user.profession, selectedProf))
         : allUsers;
     const count = filteredUsers.length;
-    const users = paginate(filteredUsers, currentPage, pageSize);
+    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
+    const users = paginate(sortedUsers, currentPage, pageSize);
 
     const clearFilter = () => {
         setSelectedProf();
@@ -64,6 +69,8 @@ const Users = ({ users: allUsers, onHandleDelete, onToggleMark }) => {
                         users={users}
                         onHandleDelete={onHandleDelete}
                         onToggleMark={onToggleMark}
+                        onSort={handleSort}
+                        selectedSort={sortBy}
                     />
                 )}
                 <div className="d-flex justify-content-center">
