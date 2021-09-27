@@ -13,7 +13,7 @@ const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
 
     const [users, setUsers] = useState();
     const handleDelete = (userId) => {
@@ -23,6 +23,7 @@ const Users = () => {
 
     useEffect(() => {
         API.users.fetchAll().then((data) => setUsers(data));
+        API.professions.fetchAll().then((data) => setProfessions(data));
     }, []);
 
     const handleToggleBookMark = (id) => {
@@ -37,10 +38,6 @@ const Users = () => {
         );
         console.log(id);
     };
-
-    useEffect(() => {
-        API.professions.fetchAll().then((data) => setProfessions(data));
-    }, []);
 
     useEffect(() => {
         setCurrentPage(1);

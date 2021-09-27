@@ -1,55 +1,39 @@
-import React from "react";
-import Qualitie from "./qualitie";
-import BookMark from "./bookMark";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import API from "../API";
+import Qualitie from "../components/qualitie";
 
-const User = ({
-    _id,
-    name,
-    rate,
-    completedMeetings,
-    profession,
-    qualities,
-    onHandleDelete,
-    bookmark,
-    onToggleMark
-}) => {
+const User = ({ match, history }) => {
+    const [user, setUser] = useState();
+    const { userId } = match.params;
+
+    useEffect(() => {
+        API.users.getById(userId).then((data) => setUser(data));
+    }, [userId]);
+
+    console.log(userId, user);
+
+    if (!user) {
+        return "loading";
+    }
+
     return (
-        <tr>
-            <td>{name}</td>
-            <td>
-                {qualities.map((item) => (
-                    <Qualitie key={item._id} {...item} />
-                ))}
-            </td>
-            <td>{profession.name}</td>
-            <td>{completedMeetings}</td>
-            <td>{rate}/5</td>
-            <td>
-                <BookMark status={bookmark} onClick={() => onToggleMark(_id)} />
-            </td>
-            <td>
-                <button
-                    className={"btn btn-danger"}
-                    onClick={() => onHandleDelete(_id)}
-                >
-                    Удалить
-                </button>
-            </td>
-        </tr>
+        <>
+            <h1>{user.name}</h1>
+            <h2>Профессия: {user.profession.name}</h2>
+            <div>{user.qualities.map(Qualitie)}</div>
+            <p>completedMeetings: {user.completedMeetings}</p>
+            <p>rate: {user.rate}</p>
+            <button onClick={() => history.push("/users")}>
+                Все пользователи
+            </button>
+        </>
     );
 };
 
 User.propTypes = {
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    rate: PropTypes.number.isRequired,
-    completedMeetings: PropTypes.number.isRequired,
-    profession: PropTypes.object.isRequired,
-    qualities: PropTypes.array.isRequired,
-    onHandleDelete: PropTypes.func.isRequired,
-    bookmark: PropTypes.bool,
-    onToggleMark: PropTypes.func.isRequired
+    match: PropTypes.object,
+    history: PropTypes.object
 };
 
 export default User;
