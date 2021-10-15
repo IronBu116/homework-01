@@ -1,39 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import API from "../API";
-import Qualitie from "../components/qualitie";
+import api from "../API";
+import QualitiesList from "./qualitiesList";
+import { useHistory } from "react-router-dom";
 
-const User = ({ match, history }) => {
+const User = ({ userId }) => {
+    const history = useHistory();
     const [user, setUser] = useState();
-    const { userId } = match.params;
-
     useEffect(() => {
-        API.users.getById(userId).then((data) => setUser(data));
-    }, [userId]);
-
-    console.log(userId, user);
-
-    if (!user) {
-        return "loading";
+        api.users.getById(userId).then((data) => setUser(data));
+    });
+    const handleClick = () => {
+        history.push("/users");
+    };
+    if (user) {
+        return (
+            <div>
+                <h1> {user.name}</h1>
+                <h2>Профессия: {user.profession.name}</h2>
+                <QualitiesList qualities={user.qualities} />
+                <p>completedMeetings: {user.completedMeetings}</p>
+                <h2>Rate: {user.rate}</h2>
+                <button onClick={handleClick}> Все Пользователи</button>
+            </div>
+        );
+    } else {
+        return <h1>Loading</h1>;
     }
-
-    return (
-        <>
-            <h1>{user.name}</h1>
-            <h2>Профессия: {user.profession.name}</h2>
-            <div>{user.qualities.map(Qualitie)}</div>
-            <p>completedMeetings: {user.completedMeetings}</p>
-            <p>rate: {user.rate}</p>
-            <button onClick={() => history.push("/users")}>
-                Все пользователи
-            </button>
-        </>
-    );
 };
 
 User.propTypes = {
-    match: PropTypes.object,
-    history: PropTypes.object
+    userId: PropTypes.string.isRequired
 };
 
 export default User;
