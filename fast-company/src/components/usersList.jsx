@@ -7,7 +7,7 @@ import API from "../API";
 import _ from "lodash";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
-import SearchList from "./searchList";
+import SearchBar from "./searchBar";
 
 const UsersList = () => {
     const pageSize = 8;
@@ -112,7 +112,7 @@ const UsersList = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
-                    <SearchList search={search} onChange={handleSearch} />
+                    <SearchBar search={search} onChange={handleSearch} />
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
