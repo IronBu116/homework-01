@@ -131,7 +131,7 @@ const RegisterForm = () => {
                 name="licence"
                 error={errors.licence}
             >
-                Подвердить <a>лецензионное соглашение</a>
+                Подвердить <a>лицензионное соглашение</a>
             </CheckBoxField>
             <button
                 type="submit"
