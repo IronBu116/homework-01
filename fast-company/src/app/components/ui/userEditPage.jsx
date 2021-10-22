@@ -10,13 +10,23 @@ import PropTypes from "prop-types";
 
 const UserEditPage = ({ userId }) => {
     const [user, setUser] = useState();
+    const [professions, setProfession] = useState();
+    const [qualities, setQualities] = useState({});
 
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data));
+        api.professions.fetchAll().then((data) => setProfession(data));
+        api.qualities.fetchAll().then((data) => setQualities(data));
     }, []);
 
-    if (user) {
-        return <UserEditForm user={user} />;
+    if (user && professions && qualities) {
+        return (
+            <UserEditForm
+                user={user}
+                professions={professions}
+                qualities={qualities}
+            />
+        );
     } else {
         return <h1>Loading...</h1>;
     }

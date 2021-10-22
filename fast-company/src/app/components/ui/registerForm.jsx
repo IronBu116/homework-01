@@ -110,20 +110,20 @@ const RegisterForm = () => {
             <RadioField
                 label="Выберите Ваш пол"
                 options={[
-                    { name: "Male", value: "Male" },
-                    { name: "Female", value: "Female" },
-                    { name: "Other", value: "Other" }
+                    { name: "Male", value: "male" },
+                    { name: "Female", value: "female" },
+                    { name: "Other", value: "other" }
                 ]}
                 value={data.sex}
                 name="sex"
                 onChange={handleChange}
             />
             <MultiSelectField
-                /* defaultValue={data.qualities} */
                 label="Выберите Ваши качества"
                 name="qualities"
                 options={qualities}
                 onChange={handleChange}
+                error={errors.qualities}
             />
             <CheckBoxField
                 value={data.licence}
