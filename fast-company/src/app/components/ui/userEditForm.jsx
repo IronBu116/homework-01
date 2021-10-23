@@ -14,7 +14,10 @@ const UserEditForm = ({ user, professions, qualities }) => {
         email: user.email,
         profession: user.profession._id,
         sex: user.sex,
-        qualities: user.qualities
+        qualities: user.qualities.map((quality) => ({
+            value: quality._id,
+            label: quality.name
+        }))
     });
     const history = useHistory();
     const [errors, setErrors] = useState({});
@@ -57,8 +60,6 @@ const UserEditForm = ({ user, professions, qualities }) => {
 
     const isValid = Object.keys(errors).length === 0;
 
-    console.log(qualities);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
@@ -66,13 +67,17 @@ const UserEditForm = ({ user, professions, qualities }) => {
         const updatedProfession = Object.values(professions).filter(
             (profession) => profession._id === data.profession
         )[0];
-        const updatedQualities = []
-        api.users.update(user._id, { ...data, profession: updatedProfession });
-        console.log(data);
+        const userQualitiesId = data.qualities.map((q) => q.value);
+        const filteredQualitites = Object.values(qualities).filter((q) =>
+            userQualitiesId.includes(q._id)
+        );
+        api.users.update(user._id, {
+            ...data,
+            profession: updatedProfession,
+            qualities: filteredQualitites
+        });
         history.goBack();
     };
-
-    console.log(data);
 
     return (
         <div className="container mt-5">
@@ -113,11 +118,7 @@ const UserEditForm = ({ user, professions, qualities }) => {
                             onChange={handleChange}
                         />
                         <MultiSelectField
-                            defaultValue={data.qualities.map((qualitie) => ({
-                                label: qualitie.name,
-                                value: qualitie._id,
-                                color: qualitie.color
-                            }))}
+                            defaultValue={data.qualities}
                             label="Выберите Ваши качества"
                             name="qualities"
                             options={qualities}
