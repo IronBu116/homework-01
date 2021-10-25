@@ -78,7 +78,9 @@ const UserEditForm = ({ user, professions, qualities }) => {
         });
         history.goBack();
     };
-
+    const handleClick = () => {
+        history.goBack();
+    };
     return (
         <div className="container mt-5">
             <div className="row">
@@ -100,6 +102,7 @@ const UserEditForm = ({ user, professions, qualities }) => {
                         />
                         <SelectField
                             label="Выберите Вашу профессию"
+                            name="profession"
                             defaultOption="Укажите профессию"
                             onChange={handleChange}
                             options={professions}
@@ -125,11 +128,18 @@ const UserEditForm = ({ user, professions, qualities }) => {
                             onChange={handleChange}
                         />
                         <button
+                            type="button"
+                            className="btn btn-primary me-2"
+                            onClick={handleClick}
+                        >
+                            Назад
+                        </button>
+                        <button
                             type="submit"
                             disabled={!isValid}
-                            className="btn btn-primary w-100 mx-auto"
+                            className="btn btn-primary"
                         >
-                            Submit
+                            Обновить
                         </button>
                     </form>
                 </div>
