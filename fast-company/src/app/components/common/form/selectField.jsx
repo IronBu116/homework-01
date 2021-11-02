@@ -3,19 +3,19 @@ import PropTypes from "prop-types";
 
 const SelectField = ({
     label,
-    name,
     value,
     onChange,
     defaultOption,
     options,
-    error
+    error,
+    name
 }) => {
-    const getInputClasses = () => {
-        return "form-select" + (error ? " is-invalid" : "");
-    };
-
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
+    };
+
+    const getInputClasses = () => {
+        return "form-select" + (error ? " is-invalid" : "");
     };
 
     const optionsArray =
@@ -52,15 +52,14 @@ const SelectField = ({
         </div>
     );
 };
-
 SelectField.propTypes = {
-    name: PropTypes.string,
     defaultOption: PropTypes.string,
     label: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
     error: PropTypes.string,
-    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    name: PropTypes.string
 };
 
 export default SelectField;

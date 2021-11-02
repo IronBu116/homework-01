@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import LoginForm from "../components/ui/loginForm";
@@ -9,12 +8,12 @@ const Login = () => {
     const [formType, setFormType] = useState(
         type === "register" ? type : "login"
     );
-
     const toggleFormType = (params) => {
         setFormType((prevState) =>
             prevState === "register" ? "login" : "register"
         );
     };
+
     return (
         <div className="container mt-5">
             <div className="row">
@@ -24,7 +23,7 @@ const Login = () => {
                             <h3 className="mb-4">Register</h3>
                             <RegisterForm />
                             <p>
-                                Allready have account?{" "}
+                                Already have account?{" "}
                                 <a role="button" onClick={toggleFormType}>
                                     {" "}
                                     Sign In
@@ -36,7 +35,7 @@ const Login = () => {
                             <h3 className="mb-4">Login</h3>
                             <LoginForm />
                             <p>
-                                Don't have account?{" "}
+                                Dont have account?{" "}
                                 <a role="button" onClick={toggleFormType}>
                                     {" "}
                                     Sign Up
@@ -49,5 +48,4 @@ const Login = () => {
         </div>
     );
 };
-
 export default Login;

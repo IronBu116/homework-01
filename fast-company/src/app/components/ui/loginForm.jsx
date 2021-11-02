@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import CheckBoxField from "../common/form/checkBoxField";
@@ -16,6 +16,7 @@ const LoginForm = () => {
             [target.name]: target.value
         }));
     };
+
     const validatorConfog = {
         email: {
             isRequired: {
@@ -27,7 +28,7 @@ const LoginForm = () => {
         },
         password: {
             isRequired: {
-                message: "Пароль обязательна для заполнения"
+                message: "Пароль обязателкн для заполнения"
             },
             isCapitalSymbol: {
                 message: "Пароль должен содержать хотя бы одну заглавную букву"
@@ -46,6 +47,7 @@ const LoginForm = () => {
     }, [data]);
     const validate = () => {
         const errors = validator(data, validatorConfog);
+
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
