@@ -12,6 +12,7 @@ const RenderCountExample = () => {
         renderCount.current++;
     });
 
+    console.log(renderCount);
     return (
         <CardWrapper>
             <SmallTitle>Подсчет количесва рендеров</SmallTitle>
