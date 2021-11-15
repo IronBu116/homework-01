@@ -2,6 +2,9 @@ import axios from "axios";
 import * as Sentry from "@sentry/react";
 import logger from "./log.service";
 import { toast } from "react-toastify";
+import config from "../config.json";
+
+axios.defaults.baseURL = config.apiEndPoint; // Можно применить в случае обращения только к Бэкэнду
 
 axios.interceptors.response.use(
   (res) => res,
