@@ -4,7 +4,6 @@ import SelectField from "../form/selectField";
 import TextAreaField from "../form/textAreaField";
 import { validator } from "../../../utils/validator";
 import PropTypes from "prop-types";
-
 const initialData = { userId: "", content: "" };
 
 const AddCommentForm = ({ onSubmit }) => {
@@ -56,7 +55,6 @@ const AddCommentForm = ({ onSubmit }) => {
             name: users[userId].name,
             value: users[userId]._id
         }));
-
     return (
         <div>
             <h2>New comment</h2>
@@ -83,7 +81,6 @@ const AddCommentForm = ({ onSubmit }) => {
         </div>
     );
 };
-
 AddCommentForm.propTypes = {
     onSubmit: PropTypes.func
 };
