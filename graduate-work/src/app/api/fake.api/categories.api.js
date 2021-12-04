@@ -1,16 +1,13 @@
 const categories = {
-  Кроссовки: { _id: "сategories28mtc8fwm", name: "Кроссовки" },
+  Обувь: { _id: "сategories28mtc8fwm", name: "Обувь" },
   Одежда: { _id: "сategories3gr3m3bgr", name: "Одежда" },
   Снаряжение: { _id: "сategorieslmcwos978", name: "Снаряжение" },
 };
 
-/* export const professions = [
-  { _id: "67rdca3eeb7f6fgeed471818", name: "Доктор" },
-  { _id: "67rdca3eeb7f6fgeed471820", name: "Официант" },
-  { _id: "67rdca3eeb7f6fgeed471814", name: "Физик" },
-  { _id: "67rdca3eeb7f6fgeed471822", name: "Инженер" },
-  { _id: "67rdca3eeb7f6fgeed471824", name: "Актер" },
-  { _id: "67rdca3eeb7f6fgeed471829", name: "Повар" },
+/* export const categories = [
+  { _id: "сategories28mtc8fwm", name: "Обувь" },
+  { _id: "сategories3gr3m3bgr", name: "Одежда" },
+  { _id: "сategorieslmcwos978", name: "Снаряжение" },
 ]; */
 
 if (!localStorage.getItem("categories")) {

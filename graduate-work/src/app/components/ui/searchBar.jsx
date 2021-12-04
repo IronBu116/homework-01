@@ -1,15 +1,15 @@
 import React from "react";
 
-const SearchBar = () => {
+const SearchBar = ({ type, name, placeholder, onChange, value }) => {
   return (
     <>
       <input
-        type="text"
+        type={type}
         className="search__bar-input"
-        name="searchQuery"
-        placeholder="Search..."
-        /* onChange={handleSearchQuery} */
-        value="Поиск..."
+        name={name}
+        placeholder={placeholder}
+        onChange={onChange}
+        value={value}
       />
     </>
   );
