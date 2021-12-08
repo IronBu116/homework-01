@@ -13,6 +13,7 @@ const GroupList = ({
     return `product__nav-item--button${selectedItem === item ? "-active" : ""}`;
   };
 
+  console.log(items);
   if (!Array.isArray(items)) {
     return (
       <>
@@ -46,7 +47,7 @@ const GroupList = ({
           key={item[valueProperty]}
           className={renderClassName(item[contentProperty])}
           onClick={() => {
-            onItemSelect(item[contentProperty]);
+            onItemSelect(item[valueProperty]);
           }}
         >
           {item[contentProperty]}

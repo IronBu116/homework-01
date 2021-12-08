@@ -7,7 +7,7 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
 
   if (pagesCount === 1) return null;
   return (
-    <div className="content__section-pagination m-0 d-flex justify-content-center">
+    <div className="content__section-pagination d-flex justify-content-center align-items-center">
       <button
         className="content__section-pagination--button mx-1"
         disabled={currentPage === 1 ? true : false}

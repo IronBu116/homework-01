@@ -7,6 +7,7 @@ import Login from "./layouts/login";
 import Divider from "./components/ui/divider";
 import About from "./layouts/about";
 import Footer from "./components/ui/footer/footer";
+import { CategoryProvider } from "./components/hook/useCategories";
 
 function App() {
   return (
@@ -14,10 +15,12 @@ function App() {
       <Header />
       <Divider />
       <Switch>
-        <Route path="/sale" component={Login} />
         <Route path="/about" component={About} />
-        <Route path="/products/:productId?/:edit?" component={Main} />
-        <Redirect to="/products" />
+        <CategoryProvider>
+          <Route path="/sale" component={Login} />
+          <Route path="/products/:productId?/:edit?" component={Main} />
+          <Redirect to="/products" />
+        </CategoryProvider>
       </Switch>
       <Footer />
     </>

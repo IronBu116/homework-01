@@ -11,20 +11,20 @@ import useMockData from "../../../utils/mockData";
 import { useProduct } from "../../hook/useProducts";
 import ProductNav from "../../ui/productNav";
 import MainContainer from "../../ui/mainContainer";
+import { useCategories } from "../../hook/useCategories";
 
 const ProductsListPage = () => {
   const { products } = useProduct();
-  console.log(products);
+  const { categories } = useCategories();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-  const [categories, setCategories] = useState();
+  /*   const [categories, setCategories] = useState(); */
   const [brands, setBrands] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState();
   const { initialize } = useMockData();
 
   useEffect(() => {
-    api.categories.fetchAll().then((data) => setCategories(data));
     api.brands.fetchAll().then((data) => setBrands(data));
   }, []);
 
@@ -37,11 +37,13 @@ const ProductsListPage = () => {
   };
 
   const handleProductSelect = (item) => {
+    console.log(item);
     if (searchQuery !== "") setSearchQuery("");
     setSelectedCategory(item);
   };
 
   const handleSearchQuery = ({ target }) => {
+    console.log(target);
     setSelectedCategory(undefined);
     setSearchQuery(target.value);
   };
@@ -65,10 +67,12 @@ const ProductsListPage = () => {
           product.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1
       )
     : selectedCategory
-    ? products.filter(
-        (product) =>
-          JSON.stringify(product.type) === JSON.stringify(selectedCategory)
-      )
+    ? products.filter((product) => {
+        console.log(product.category, selectedCategory);
+        return (
+          JSON.stringify(product.category) === JSON.stringify(selectedCategory)
+        );
+      })
     : products;
 
   const pageSize = 6;
@@ -96,14 +100,8 @@ const ProductsListPage = () => {
           <div className="product__nav-item">Loading...</div>
         </ProductNav>
       )}
-      <MainContainer style="p-0">
+      <MainContainer>
         <div className="content__section-nav d-flex justify-content-end m-3">
-          <button
-            className="header__usernav--link ms-3"
-            onClick={initializeData}
-          >
-            Получить данные
-          </button>
           <SearchBar
             type="text"
             name="searchQuery"
@@ -111,6 +109,12 @@ const ProductsListPage = () => {
             onChange={handleSearchQuery}
             value={searchQuery}
           />
+          <button
+            className="content__section-nav--link ms-3"
+            onClick={initializeData}
+          >
+            Получить данные
+          </button>
           <button className="content__section-view ms-3">
             {viewIconTable}
           </button>
@@ -119,6 +123,7 @@ const ProductsListPage = () => {
           data={productsCrop}
           onSort={handleSort}
           selectedSort={sortBy}
+          categories={categories}
         />
         <Pagination
           itemsCount={count}

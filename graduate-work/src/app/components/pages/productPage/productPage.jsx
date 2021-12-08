@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import api from "../../../api";
-import ProductCard from "./productCard";
 import ProductNav from "../../ui/productNav";
 import MainContainer from "../../ui/mainContainer";
+import ProductCard from "../../ui/productPageUi/productCard";
 
 const ProductPage = ({ productId }) => {
   const [product, setProduct] = useState();
@@ -31,7 +31,7 @@ const ProductPage = ({ productId }) => {
         <ProductNav>
           <div className="product__nav-item">Загрузка...</div>
         </ProductNav>
-        <MainContainer></MainContainer>
+        <MainContainer />
       </>
     );
   }

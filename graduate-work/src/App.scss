@@ -113,49 +113,6 @@ a:active {
   border: 3px solid #181d31;
 }
 
-.footer {
-  height: 200px;
-}
-
-.footer__socials {
-  height: 55px;
-}
-
-.footer__socials-item {
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-}
-
-.footer__socials-item--link {
-  border-radius: 50%;
-  height: 35px;
-  width: 35px;
-  transition: all 0.25s;
-}
-
-.footer__socials-item--link:hover {
-  height: 50px;
-  width: 50px;
-}
-
-.footer__nav-item--link {
-  color: #181d31;
-  font-weight: 800;
-  font-size: 18px;
-}
-
-.footer__info {
-  font-weight: 800;
-  font-size: 16px;
-}
-
-.footer__nav-item--link:hover {
-  -moz-text-shadow: 0 0 10px #678983;
-  -webkit-text-shadow: 0 0 10px #678983;
-  text-shadow: 0 0 10px #678983;
-}
-
 .search__bar-input {
   width: 15%;
   background-color: white;
@@ -189,13 +146,6 @@ a:active {
 .content__section-view:hover {
   box-shadow: 0 0 3px 3px #678983;
 }
-/* 
-.someDiv {
-  margin: auto;
-  width: 350px;
-  height: 500px;
-  background-color: red;
-} */
 
 .content__section-card {
   max-width: 100%;
@@ -203,7 +153,7 @@ a:active {
 }
 
 .content__section-pagination {
-  height: 46;
+  height: 70px;
   margin: 0;
 }
 
@@ -245,7 +195,7 @@ table {
 }
 
 th {
-  width: 165px;
+  width: 170px;
   height: 35px;
   text-align: center;
   vertical-align: middle;
@@ -253,7 +203,7 @@ th {
 
 th:last-child,
 th:first-child {
-  width: 219px;
+  width: 220px;
   height: 35px;
   text-align: center;
   vertical-align: middle;
@@ -265,7 +215,7 @@ tr {
 }
 
 td {
-  width: 165px;
+  width: 170px;
   height: 78px;
   color: #181d31;
   padding: 0;
@@ -332,6 +282,61 @@ td:first-child {
 }
 
 .table__links:hover {
+  text-shadow: 0 0 10px #678983;
+}
+
+.content__section-nav--link {
+  color: #181d31;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border: 2px solid #181d31;
+  border-radius: 4px;
+  text-decoration: none;
+  background-color: #e6ddc4;
+}
+
+.footer {
+  height: 200px;
+}
+
+.footer__socials {
+  height: 55px;
+}
+
+.footer__socials-item {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.footer__socials-item--link {
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  transition: all 0.25s;
+}
+
+.footer__socials-item--link:hover {
+  height: 50px;
+  width: 50px;
+}
+
+.footer__nav-item--link {
+  color: #181d31;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.footer__info {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.footer__nav-item--link:hover {
+  -moz-text-shadow: 0 0 10px #678983;
+  -webkit-text-shadow: 0 0 10px #678983;
   text-shadow: 0 0 10px #678983;
 }
 

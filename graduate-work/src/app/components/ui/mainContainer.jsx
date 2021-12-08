@@ -1,10 +1,8 @@
 import React from "react";
 
-const MainContainer = ({ children, style }) => {
+const MainContainer = ({ children }) => {
   return (
-    <section className={`content__section container-xl ${style}`}>
-      {children}
-    </section>
+    <section className="content__section container-xl">{children}</section>
   );
 };
 
