@@ -1,12 +1,12 @@
-import "./bootstrap.scss";
-import "./App.scss";
-import Header from "./app/components/ui/navBar/header";
+import "../bootstrap.scss";
+import "../App.scss";
+import Header from "./components/ui/navBar/header";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Main from "./app/layouts/main";
-import Login from "./app/layouts/login";
-import Divider from "./app/components/ui/divider";
-import About from "./app/layouts/about";
-import Footer from "./app/components/ui/footer/footer";
+import Main from "./layouts/main";
+import Login from "./layouts/login";
+import Divider from "./components/ui/divider";
+import About from "./layouts/about";
+import Footer from "./components/ui/footer/footer";
 
 function App() {
   return (

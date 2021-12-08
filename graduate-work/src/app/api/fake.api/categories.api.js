@@ -1,7 +1,7 @@
 const categories = {
-  Обувь: { _id: "сategories28mtc8fwm", name: "Обувь" },
-  Одежда: { _id: "сategories3gr3m3bgr", name: "Одежда" },
-  Снаряжение: { _id: "сategorieslmcwos978", name: "Снаряжение" },
+  сategories28mtc8fwm: { _id: "сategories28mtc8fwm", name: "Обувь" },
+  сategories3gr3m3bgr: { _id: "сategories3gr3m3bgr", name: "Одежда" },
+  сategorieslmcwos978: { _id: "сategorieslmcwos978", name: "Снаряжение" },
 };
 
 /* export const categories = [

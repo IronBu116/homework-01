@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from "react";
-import api from "../api";
-import ProductsListPage from "../components/pages/productListPage";
+import React from "react";
 import { useParams } from "react-router-dom";
 import ProductPage from "../components/pages/productPage";
+import ProductsListPage from "../components/pages/productListPage";
+import EditProductPage from "../components/pages/EditProductPage/editProductPage";
+import ProductProvider from "../components/hook/useProducts";
 
 const Main = () => {
-  const params = useParams();
-  const { productId } = params;
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    api.products.fetchAll().then((data) => setProducts(data));
-  }, []);
+  const { productId, edit } = useParams();
 
   return (
     <>
-      {productId ? (
-        <ProductPage productId={productId} />
-      ) : (
-        <ProductsListPage products={products} />
-      )}
+      <ProductProvider>
+        {productId ? (
+          edit ? (
+            <EditProductPage productId={productId} />
+          ) : (
+            <ProductPage productId={productId} />
+          )
+        ) : (
+          <ProductsListPage />
+        )}
+      </ProductProvider>
     </>
   );
 };

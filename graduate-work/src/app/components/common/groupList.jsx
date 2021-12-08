@@ -15,7 +15,7 @@ const GroupList = ({
 
   if (!Array.isArray(items)) {
     return (
-      <section className="product__nav container-xl d-flex justify-content-around">
+      <>
         <button
           className={renderClassName(undefined)}
           onClick={() => onClear()}
@@ -33,11 +33,11 @@ const GroupList = ({
             {items[item][contentProperty]}
           </button>
         ))}
-      </section>
+      </>
     );
   }
   return (
-    <section className="product__nav container-xl d-flex justify-content-around">
+    <>
       <button className={renderClassName(undefined)} onClick={() => onClear()}>
         Все
       </button>
@@ -52,7 +52,7 @@ const GroupList = ({
           {item[contentProperty]}
         </button>
       ))}
-    </section>
+    </>
   );
 };
 

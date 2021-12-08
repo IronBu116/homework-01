@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const Sale = () => {
-  useEffect(() => {}, []);
   return <h1>Распродажа: </h1>;
 };
 
