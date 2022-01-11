@@ -6,7 +6,7 @@ const HeaderNavList = () => {
     <div className="header__nav-list col-5">
       <ul className="header__nav-list nav d-flex justify-content-around">
         <li className="nav-item">
-          <Link className="nav-item--link" aria-current="page" to="/">
+          <Link className="nav-item--link" aria-current="page" to="/products">
             Главная
           </Link>
         </li>

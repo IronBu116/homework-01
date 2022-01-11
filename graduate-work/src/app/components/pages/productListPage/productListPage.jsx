@@ -6,7 +6,6 @@ import Pagination from "../../common/pagination";
 import _ from "lodash";
 import ProductTable from "../../ui/productTable";
 import GroupList from "../../common/groupList";
-import api from "../../../api";
 import useMockData from "../../../utils/mockData";
 import { useProduct } from "../../hook/useProducts";
 import ProductNav from "../../ui/productNav";
@@ -16,17 +15,11 @@ import { useCategories } from "../../hook/useCategories";
 const ProductsListPage = () => {
   const { products } = useProduct();
   const { categories } = useCategories();
+  const { initialize } = useMockData();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-  /*   const [categories, setCategories] = useState(); */
-  const [brands, setBrands] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState();
-  const { initialize } = useMockData();
-
-  useEffect(() => {
-    api.brands.fetchAll().then((data) => setBrands(data));
-  }, []);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -37,13 +30,11 @@ const ProductsListPage = () => {
   };
 
   const handleProductSelect = (item) => {
-    console.log(item);
     if (searchQuery !== "") setSearchQuery("");
     setSelectedCategory(item);
   };
 
   const handleSearchQuery = ({ target }) => {
-    console.log(target);
     setSelectedCategory(undefined);
     setSearchQuery(target.value);
   };
@@ -57,7 +48,6 @@ const ProductsListPage = () => {
   };
 
   const initializeData = () => {
-    console.log("inititalize");
     initialize();
   };
 
@@ -68,7 +58,6 @@ const ProductsListPage = () => {
       )
     : selectedCategory
     ? products.filter((product) => {
-        console.log(product.category, selectedCategory);
         return (
           JSON.stringify(product.category) === JSON.stringify(selectedCategory)
         );
@@ -76,12 +65,15 @@ const ProductsListPage = () => {
     : products;
 
   const pageSize = 6;
+
   const count = filteredProducts.length;
+
   const sortedProducts = _.orderBy(
     filteredProducts,
     [sortBy.path],
     [sortBy.order]
   );
+
   const productsCrop = paginate(sortedProducts, currentPage, pageSize);
 
   return (
@@ -109,28 +101,28 @@ const ProductsListPage = () => {
             onChange={handleSearchQuery}
             value={searchQuery}
           />
-          <button
-            className="content__section-nav--link ms-3"
-            onClick={initializeData}
-          >
+          <button className="mockdata_button ms-3" onClick={initializeData}>
             Получить данные
           </button>
           <button className="content__section-view ms-3">
             {viewIconTable}
           </button>
         </div>
-        <ProductTable
-          data={productsCrop}
-          onSort={handleSort}
-          selectedSort={sortBy}
-          categories={categories}
-        />
-        <Pagination
-          itemsCount={count}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
+        {count > 0 && (
+          <>
+            <ProductTable
+              data={productsCrop}
+              onSort={handleSort}
+              selectedSort={sortBy}
+            />
+            <Pagination
+              itemsCount={count}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </>
+        )}
       </MainContainer>
     </>
   );

@@ -13,7 +13,6 @@ const GroupList = ({
     return `product__nav-item--button${selectedItem === item ? "-active" : ""}`;
   };
 
-  console.log(items);
   if (!Array.isArray(items)) {
     return (
       <>
@@ -26,7 +25,7 @@ const GroupList = ({
         {Object.keys(items).map((item) => (
           <button
             key={items[item][valueProperty]}
-            className={renderClassName(items[item][contentProperty])}
+            className={renderClassName(items[item][valueProperty])}
             onClick={() => {
               onItemSelect(items[item][contentProperty]);
             }}
@@ -45,7 +44,7 @@ const GroupList = ({
       {items.map((item) => (
         <button
           key={item[valueProperty]}
-          className={renderClassName(item[contentProperty])}
+          className={renderClassName(item[valueProperty])}
           onClick={() => {
             onItemSelect(item[valueProperty]);
           }}

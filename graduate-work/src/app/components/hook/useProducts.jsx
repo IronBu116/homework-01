@@ -17,18 +17,21 @@ const ProductProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    async function getProducts() {
+      try {
+        const { content } = await productService.get();
+        setProducts(content);
+        setLoading(false);
+      } catch (error) {
+        errorCatcher(error);
+      }
+    }
     getProducts();
   }, []);
 
-  async function getProducts() {
-    try {
-      const { content } = await productService.get();
-      setProducts(content);
-      setLoading(false);
-    } catch (error) {
-      errorCatcher(error);
-    }
-  }
+  const getProductById = (id) => {
+    return products.find((p) => p._id === id);
+  };
 
   useEffect(() => {
     if (error !== null) {
@@ -43,7 +46,7 @@ const ProductProvider = ({ children }) => {
   }
 
   return (
-    <ProductContext.Provider value={{ products }}>
+    <ProductContext.Provider value={{ products, getProductById }}>
       {!isLoading ? (
         children
       ) : (

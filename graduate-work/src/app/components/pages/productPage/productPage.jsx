@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import api from "../../../api";
 import ProductNav from "../../ui/productNav";
 import MainContainer from "../../ui/mainContainer";
 import ProductCard from "../../ui/productPageUi/productCard";
+import { useProduct } from "../../hook/useProducts";
 
 const ProductPage = ({ productId }) => {
   const [product, setProduct] = useState();
+  const { getProductById } = useProduct();
 
   useEffect(() => {
-    api.products.getById(productId).then((data) => setProduct(data));
-  }, []);
+    setProduct(getProductById(productId));
+  }, [productId, getProductById]);
 
   if (product) {
     return (

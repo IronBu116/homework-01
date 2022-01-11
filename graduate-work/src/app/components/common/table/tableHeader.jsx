@@ -3,6 +3,7 @@ import { arrowDownIcon, arrowUpIcon } from "../../../constants/svg";
 
 const TableHeader = ({ columns, selectedSort, onSort }) => {
   const handleSort = (item) => {
+    console.log(columns);
     if (selectedSort.path === item) {
       onSort({
         ...selectedSort,

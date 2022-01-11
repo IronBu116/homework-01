@@ -13,8 +13,9 @@ const SelectField = ({
   const handleChange = ({ target }) => {
     onChange({ name: target.name, value: target.value });
   };
+
   const getInputClasses = () => {
-    return "form-select" + (error ? " is-invalid" : "");
+    return "input__field--form form-select" + (error ? " is-invalid" : "");
   };
 
   const optionsArray =
@@ -23,14 +24,12 @@ const SelectField = ({
           label: options[optionName].name,
           value: options[optionName]._id,
         }))
-      : options;
-
-  console.log(optionsArray);
+      : options.map((option) => ({ label: option.name, value: option._id }));
 
   return (
-    <div className="mb-4">
-      <label htmlFor="validationCustom04" className="form-label">
-        {label}
+    <div className="input__field--container mb-2">
+      <label htmlFor="validationCustom04">
+        <strong>{label}</strong>
       </label>
       <select
         className={getInputClasses()}
@@ -53,6 +52,7 @@ const SelectField = ({
     </div>
   );
 };
+
 SelectField.propTypes = {
   defaultOption: PropTypes.string,
   label: PropTypes.string,

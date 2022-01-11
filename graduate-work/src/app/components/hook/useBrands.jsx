@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
-import categoryService from "../../services/category.service";
+import brandService from "../../services/brand.service";
 
-const CategoryContext = React.createContext();
+const BrandContext = React.createContext();
 
-export const useCategories = () => {
-  return useContext(CategoryContext);
+export const useBrands = () => {
+  return useContext(BrandContext);
 };
 
-export const CategoryProvider = ({ children }) => {
+export const BrandProvider = ({ children }) => {
   const [isLoading, setLoading] = useState(true);
-  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -22,16 +22,16 @@ export const CategoryProvider = ({ children }) => {
   }, [error]);
 
   useEffect(() => {
-    async function getCategoriesList() {
+    async function getBrandsList() {
       try {
-        const { content } = await categoryService.get();
-        setCategories(content);
+        const { content } = await brandService.get();
+        setBrands(content);
         setLoading(false);
       } catch (error) {
         errorCatcher(error);
       }
     }
-    getCategoriesList();
+    getBrandsList();
   }, []);
 
   function errorCatcher(error) {
@@ -40,18 +40,18 @@ export const CategoryProvider = ({ children }) => {
     setError(message);
   }
 
-  function getCategory(id) {
-    return categories.find((p) => p._id === id);
+  function getBrand(id) {
+    return brands.find((p) => p._id === id);
   }
 
   return (
-    <CategoryContext.Provider value={{ isLoading, categories, getCategory }}>
+    <BrandContext.Provider value={{ isLoading, brands, getBrand }}>
       {children}
-    </CategoryContext.Provider>
+    </BrandContext.Provider>
   );
 };
 
-CategoryProvider.propTypes = {
+BrandProvider.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

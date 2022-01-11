@@ -9,18 +9,17 @@ import { ToastContainer } from "react-toastify";
 import { ProfessionProvider } from "./hooks/useProfession";
 import { QualitiesProvider } from "./hooks/useQualities";
 import AuthProvider from "./hooks/useAuth";
-import LoginProvider from "./hooks/useLogin";
+import ProtectedRoute from "./components/common/protectedRoute";
 
 function App() {
     return (
         <div>
             <AuthProvider>
-                <LoginProvider >
                 <NavBar />
                 <QualitiesProvider>
                     <ProfessionProvider>
                         <Switch>
-                            <Route
+                            <ProtectedRoute
                                 path="/users/:userId?/:edit?"
                                 component={Users}
                             />
@@ -30,7 +29,6 @@ function App() {
                         </Switch>
                     </ProfessionProvider>
                 </QualitiesProvider>
-                </LoginProvider >
             </AuthProvider>
             <ToastContainer />
         </div>

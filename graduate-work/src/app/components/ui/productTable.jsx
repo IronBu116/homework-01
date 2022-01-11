@@ -4,10 +4,10 @@ import Table from "../common/table/table";
 import { Link } from "react-router-dom";
 import AddToCart from "./addToCart";
 import { renderPrice } from "../../utils/renderPrice";
-import { useCategories } from "../hook/useCategories";
+import Brand from "./brand";
+import Category from "./category";
 
-const ProductTable = ({ data, categories, onSort, selectedSort, ...rest }) => {
-  const { getCategory } = useCategories();
+const ProductTable = ({ data, onSort, selectedSort }) => {
   const columns = {
     name: {
       path: "name",
@@ -21,11 +21,12 @@ const ProductTable = ({ data, categories, onSort, selectedSort, ...rest }) => {
     brand: {
       path: "brand",
       name: "Бренд",
+      component: (product) => <Brand id={product.brand} />,
     },
     category: {
       path: "category",
       name: "Категория",
-      component: (product) => getCategory(product.category).name,
+      component: (product) => <Category id={product.category} />,
     },
     amount: {
       path: "amount",

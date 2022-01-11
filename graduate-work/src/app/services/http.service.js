@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import configFile from "../config.json";
 
 const http = axios.create({ baseURL: configFile.apiEndpoint });
+
 http.interceptors.request.use(
   function (config) {
     if (configFile.isFireBase) {
@@ -46,10 +47,12 @@ http.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 const httpService = {
   get: http.get,
   post: http.post,
   put: http.put,
   delete: http.delete,
 };
+
 export default httpService;

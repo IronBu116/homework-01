@@ -24,7 +24,12 @@ const ProductButtons = ({ product }) => {
   return (
     <>
       {product.amount === 0 ? (
-        <h3>Товара нет в наличии</h3>
+        <>
+          <h3>
+            <div>Товара нет в наличии</div>
+            <BackHistoryButton />
+          </h3>
+        </>
       ) : (
         <>
           <strong>Выберите количество: </strong>
