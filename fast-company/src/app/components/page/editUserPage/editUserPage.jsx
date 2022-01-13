@@ -1,73 +1,81 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { validator } from "../../../utils/validator";
-import api from "../../../api";
 import TextField from "../../common/form/textField";
 import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radio.Field";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
+import { useProfessions } from "../../../hooks/useProfession";
+import { useQualities } from "../../../hooks/useQualities";
+import { useAuth } from "../../../hooks/useAuth";
 
 const EditUserPage = () => {
     const { userId } = useParams();
+    const { professions } = useProfessions();
+    const { qualities } = useQualities();
+    const { currentUser, updateUser } = useAuth();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState({
         email: "",
-        password: "",
         profession: "",
         sex: "male",
         qualities: []
     });
-    const [professions, setProfession] = useState([]);
-    const [qualities, setQualities] = useState({});
     const [errors, setErrors] = useState({});
-    const getProfessionById = (id) => {
-        for (const prof in professions) {
-            const profData = professions[prof];
-            if (profData._id === id) return profData;
-        }
-    };
-    const getQualities = (elements) => {
-        const qualitiesQrray = [];
-        for (const elem of elements) {
-            for (const qualy in qualities) {
-                if (elem.value === qualities[qualy]._id) {
-                    qualitiesQrray.push(qualities[qualy]);
+
+    const professionsList = professions.map((p) => ({
+        label: p.name,
+        value: p._id
+    }));
+
+    const qualitiesList = qualities.map((q) => ({
+        label: q.name,
+        value: q._id
+    }));
+
+    const transformQualities = (arr, itemArr) => {
+        const transformedArr = [];
+        arr.forEach((id) => {
+            itemArr.forEach((item) => {
+                if (item._id === id) {
+                    transformedArr.push({
+                        label: item.name,
+                        value: item._id
+                    });
                 }
-            }
-        }
-        return qualitiesQrray;
+            });
+        });
+        return transformedArr;
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        const { profession, qualities } = data;
-        api.users
-            .update(userId, {
-                ...data,
-                profession: getProfessionById(profession),
-                qualities: getQualities(qualities)
-            })
-            .then((data) => history.push(`/users/${data._id}`));
-        console.log(data);
+        updateUser(userId, {
+            ...data,
+            qualities: data.qualities.map((e) => e.value)
+        });
     };
+
     useEffect(() => {
+        if (currentUser._id !== userId) {
+            history.push(`/users/${currentUser._id}/edit`);
+        }
         setIsLoading(true);
-        api.users.getById(userId).then(({ profession, ...data }) =>
-            setData((prevState) => ({
-                ...prevState,
-                ...data,
-                profession: profession._id
-            }))
-        );
-        api.qualities.fetchAll().then((data) => setQualities(data));
-        api.professions.fetchAll().then((data) => setProfession(data));
+        setData((prevState) => ({
+            ...prevState,
+            ...currentUser,
+            qualities: transformQualities(currentUser.qualities, qualities)
+        }));
     }, []);
+
     useEffect(() => {
-        if (data._id) setIsLoading(false);
+        if (data._id) {
+            setIsLoading(false);
+        }
     }, [data]);
 
     const validatorConfog = {
@@ -79,26 +87,34 @@ const EditUserPage = () => {
                 message: "Email введен некорректно"
             }
         },
-
         name: {
             isRequired: {
                 message: "Введите ваше имя"
+            },
+            min: {
+                message: "Имя должно быть не менее 3 символов",
+                value: 3
             }
         }
     };
+
     useEffect(() => validate(), [data]);
+
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
     };
+
     const validate = () => {
         const errors = validator(data, validatorConfog);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
+
     const isValid = Object.keys(errors).length === 0;
+
     return (
         <div className="container mt-5">
             <BackHistoryButton />
@@ -123,7 +139,8 @@ const EditUserPage = () => {
                             <SelectField
                                 label="Выбери свою профессию"
                                 defaultOption="Choose..."
-                                options={professions}
+                                name="profession"
+                                options={professionsList}
                                 onChange={handleChange}
                                 value={data.profession}
                                 error={errors.profession}
@@ -141,11 +158,11 @@ const EditUserPage = () => {
                             />
                             <MultiSelectField
                                 defaultValue={data.qualities}
-                                options={qualities}
+                                options={qualitiesList}
                                 onChange={handleChange}
                                 values
                                 name="qualities"
-                                label="Выберите ваши качесвта"
+                                label="Выберите ваши качества"
                             />
                             <button
                                 type="submit"

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import localStorageService, {
     setTokens
 } from "../services/localStorage.service";
+import { useHistory } from "react-router-dom";
 
 export const httpAuth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1/",
@@ -23,6 +24,7 @@ const AuthProvider = ({ children }) => {
     const [currentUser, setUser] = useState();
     const [error, setError] = useState(null);
     const [isLoading, setLoading] = useState(true);
+    const history = useHistory();
 
     async function logIn({ email, password }) {
         try {
@@ -53,6 +55,12 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    function logOut() {
+        localStorageService.removeAuthData();
+        setUser(null);
+        history.push("/");
+    }
+
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
@@ -70,6 +78,11 @@ const AuthProvider = ({ children }) => {
                 email,
                 rate: randomInt(1, 5),
                 completedMeetings: randomInt(0, 200),
+                image: `https://avatars.dicebear.com/api/avataaars/${(
+                    Math.random() + 1
+                )
+                    .toString(36)
+                    .substring(7)}.svg`,
                 ...rest
             });
             console.log(data);
@@ -86,6 +99,15 @@ const AuthProvider = ({ children }) => {
                     throw errorObject;
                 }
             }
+        }
+    }
+
+    function updateUser(userId, data) {
+        try {
+            userService.update(userId, data);
+            history.push(`/users/${userId}`);
+        } catch (error) {
+            errorCatcher(error);
         }
     }
 
@@ -131,7 +153,9 @@ const AuthProvider = ({ children }) => {
     }, [error]);
 
     return (
-        <AuthContext.Provider value={{ signUp, logIn, currentUser }}>
+        <AuthContext.Provider
+            value={{ signUp, logIn, logOut, updateUser, currentUser }}
+        >
             {!isLoading ? children : "Loading"}
         </AuthContext.Provider>
     );

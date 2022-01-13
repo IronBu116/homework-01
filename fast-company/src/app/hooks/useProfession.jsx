@@ -23,10 +23,12 @@ export const ProfessionProvider = ({ children }) => {
     useEffect(() => {
         getProfessionsList();
     }, []);
+
     function errorCatcher(error) {
         const { message } = error.response.data;
         setError(message);
     }
+
     function getProfession(id) {
         return professions.find((p) => p._id === id);
     }

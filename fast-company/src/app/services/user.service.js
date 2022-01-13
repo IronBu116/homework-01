@@ -20,6 +20,10 @@ const userService = {
             payload
         );
         return data;
+    },
+    update: async (userId, payload) => {
+        const { data } = await httpService.put(userEndpoint + userId, payload);
+        return data;
     }
 };
 export default userService;
