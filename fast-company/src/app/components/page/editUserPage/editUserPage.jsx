@@ -9,6 +9,7 @@ import BackHistoryButton from "../../common/backButton";
 import { useProfessions } from "../../../hooks/useProfession";
 import { useQualities } from "../../../hooks/useQualities";
 import { useAuth } from "../../../hooks/useAuth";
+import { isArray } from "lodash";
 
 const EditUserPage = () => {
     const { userId } = useParams();
@@ -37,16 +38,18 @@ const EditUserPage = () => {
 
     const transformQualities = (arr, itemArr) => {
         const transformedArr = [];
-        arr.forEach((id) => {
-            itemArr.forEach((item) => {
-                if (item._id === id) {
-                    transformedArr.push({
-                        label: item.name,
-                        value: item._id
-                    });
-                }
+        if (isArray(arr) && arr.length !== 0) {
+            arr.forEach((id) => {
+                itemArr.forEach((item) => {
+                    if (item._id === id) {
+                        transformedArr.push({
+                            label: item.name,
+                            value: item._id
+                        });
+                    }
+                });
             });
-        });
+        }
         return transformedArr;
     };
 
